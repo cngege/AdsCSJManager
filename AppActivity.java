@@ -62,7 +62,6 @@ public class AppActivity extends CocosActivity {
                 AdNative.getInstance().LoadAd("889094689").Handler(new AdMainCallBack.AdLoadStatusCallBack() {
                     @Override
                     public void onSuccess(AdMainCallBack.LoadStatusType type, Object obj) {
-                        AdMainCallBack.AdLoadStatusCallBack.super.onSuccess(type, obj);
                         if(type == AdMainCallBack.LoadStatusType.RENDER){
                             //必须是渲染成功才进行广告的加载
                             AdNative.getInstance().ShowAd();
@@ -70,7 +69,6 @@ public class AppActivity extends CocosActivity {
                     }
                     @Override
                     public void onError(AdMainCallBack.LoadStatusType type, Object obj, int i, String e) {
-                        AdMainCallBack.AdLoadStatusCallBack.super.onError(type, obj, i, e);
                     }
                 });
             }

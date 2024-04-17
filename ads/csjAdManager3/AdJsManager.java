@@ -1,9 +1,6 @@
 package ads.csjAdManager3;
 
 import static com.cocos.lib.GlobalObject.runOnUiThread;
-
-import android.app.Activity;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -58,13 +55,11 @@ public class AdJsManager {
                                     AdBanner.getInstance().LoadAd(CodeId).Handler(new AdMainCallBack.AdLoadStatusCallBack() {
                                         @Override
                                         public void onSuccess(AdMainCallBack.LoadStatusType type, Object obj) {
-                                            AdMainCallBack.AdLoadStatusCallBack.super.onSuccess(type, obj);
                                             JsbBridge.sendToScript("ADBANNER", "LOADED");   //发生到ts消息 横幅广告加载完成可以显示
                                         }
 
                                         @Override
                                         public void onError(AdMainCallBack.LoadStatusType type, Object obj, int i, String e) {
-                                            AdMainCallBack.AdLoadStatusCallBack.super.onError(type, obj, i, e);
                                         }
                                     });
                                 }else{
@@ -86,13 +81,11 @@ public class AdJsManager {
                                     AdFullScreenVideo.getInstance().LoadAd(CodeId).Handler(new AdMainCallBack.AdLoadStatusCallBack() {
                                         @Override
                                         public void onSuccess(AdMainCallBack.LoadStatusType type, Object obj) {
-                                            AdMainCallBack.AdLoadStatusCallBack.super.onSuccess(type, obj);
                                             JsbBridge.sendToScript("ADFULLSCREEN", "LOADED");   //发送到ts消息 横幅广告加载完成可以显示
                                         }
 
                                         @Override
                                         public void onError(AdMainCallBack.LoadStatusType type, Object obj, int i, String e) {
-                                            AdMainCallBack.AdLoadStatusCallBack.super.onError(type, obj, i, e);
                                         }
                                     });
                                 }else{
@@ -110,13 +103,11 @@ public class AdJsManager {
                                     ADReward.getInstance().LoadAd(CodeId).Handler(new AdMainCallBack.AdLoadStatusCallBack() {
                                         @Override
                                         public void onSuccess(AdMainCallBack.LoadStatusType type, Object obj) {
-                                            AdMainCallBack.AdLoadStatusCallBack.super.onSuccess(type, obj);
                                             JsbBridge.sendToScript("ADREWARD", "LOADED");   //发送到ts消息 横幅广告加载完成可以显示
                                         }
 
                                         @Override
                                         public void onError(AdMainCallBack.LoadStatusType type, Object obj, int i, String e) {
-                                            AdMainCallBack.AdLoadStatusCallBack.super.onError(type, obj, i, e);
                                         }
                                     });
                                 }
@@ -131,13 +122,11 @@ public class AdJsManager {
                                     AdFeed.getInstance().LoadAd(CodeId).Handler(new AdMainCallBack.AdLoadStatusCallBack() {
                                         @Override
                                         public void onSuccess(AdMainCallBack.LoadStatusType type, Object obj) {
-                                            AdMainCallBack.AdLoadStatusCallBack.super.onSuccess(type, obj);
                                             JsbBridge.sendToScript("ADFEED", "LOADED");   //发送到ts消息 横幅广告加载完成可以显示
                                         }
 
                                         @Override
                                         public void onError(AdMainCallBack.LoadStatusType type, Object obj, int i, String e) {
-                                            AdMainCallBack.AdLoadStatusCallBack.super.onError(type, obj, i, e);
                                         }
                                     });
                                 }else{
@@ -151,13 +140,11 @@ public class AdJsManager {
                                     AdDrawFeed.getInstance().LoadAd(CodeId).Handler(new AdMainCallBack.AdLoadStatusCallBack() {
                                         @Override
                                         public void onSuccess(AdMainCallBack.LoadStatusType type, Object obj) {
-                                            AdMainCallBack.AdLoadStatusCallBack.super.onSuccess(type, obj);
                                             JsbBridge.sendToScript("ADDRAWFEED", "LOADED");   //发送到ts消息 横幅广告加载完成可以显示
                                         }
 
                                         @Override
                                         public void onError(AdMainCallBack.LoadStatusType type, Object obj, int i, String e) {
-                                            AdMainCallBack.AdLoadStatusCallBack.super.onError(type, obj, i, e);
                                         }
                                     });
                                 }else{

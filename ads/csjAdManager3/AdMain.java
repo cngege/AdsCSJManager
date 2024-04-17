@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Point;
-import android.os.Build;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
@@ -16,8 +15,6 @@ import android.widget.Toast;
 import com.bytedance.sdk.openadsdk.TTAdConfig;
 import com.bytedance.sdk.openadsdk.TTAdSdk;
 import com.bytedance.sdk.openadsdk.TTCustomController;
-import com.cocos.lib.CocosActivity;
-import com.cocos.lib.CocosKeyCodeHandler;
 
 
 public class AdMain {
@@ -51,6 +48,10 @@ public class AdMain {
 
     public Context getGameCtx(){
         return m_ctx;
+    }
+
+    public Activity getGameCtxAsActivity(){
+        return (Activity)m_ctx;
     }
 
     /***

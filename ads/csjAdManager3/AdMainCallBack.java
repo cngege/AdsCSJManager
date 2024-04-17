@@ -22,8 +22,8 @@ public class AdMainCallBack {
     }
 
     public interface AdLoadStatusCallBack{
-        default void onSuccess(LoadStatusType type, Object obj){};
-        default void onError(LoadStatusType type, Object obj, int i, String e){};
+        void onSuccess(LoadStatusType type, Object obj);
+        void onError(LoadStatusType type, Object obj, int i, String e);
     }
 
     public void Handler(SDKInitCallBack call){
