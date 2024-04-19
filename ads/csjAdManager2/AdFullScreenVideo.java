@@ -1,5 +1,5 @@
-package ads.csjAdManager2;
-// 插全屏广�?
+﻿package ads.csjAdManager2;
+// 插全屏广告
 
 import android.app.Activity;
 import android.content.Context;
@@ -33,7 +33,7 @@ public class AdFullScreenVideo {
             m_adMainCallBack = new AdMainCallBack();
         }
 
-        //加载插全屏广�?
+        //加载插全屏广告
         TTAdNative adNativeLoader = TTAdSdk.getAdManager().createAdNative(AdMain.getInstance().getGameCtx());
         adNativeLoader.loadFullScreenVideoAd(new AdSlot.Builder().setCodeId(id).setOrientation(TTAdConstant.VERTICAL).setMediationAdSlot(new MediationAdSlot.Builder().setMuted(false).build()).build(), new TTAdNative.FullScreenVideoAdListener() {
             @Override
@@ -59,7 +59,7 @@ public class AdFullScreenVideo {
 
             @Override
             public void onFullScreenVideoCached(TTFullScreenVideoAd ttFullScreenVideoAd) {
-                //广告缓存成功 在此回调中进行广告展�?
+                //广告缓存成功 在此回调中进行广告展示
                 ad = ttFullScreenVideoAd;
                 if(m_adMainCallBack.adLoadStatusCallBack != null){
                     m_adMainCallBack.adLoadStatusCallBack.onSuccess(AdMainCallBack.LoadStatusType.CACHE, ttFullScreenVideoAd);
@@ -70,12 +70,12 @@ public class AdFullScreenVideo {
     }
 
 
-    //展示插全屏广�?
+    //展示插全屏广告
     public void ShowAd() {
 
         Activity activity = (Activity)AdMain.getInstance().getGameCtx();
         if (activity == null || ad == null) {
-            m_mainInstance.DebugPrintE("%s act == null || ttRewardVideoAd == null" , "插全屏广�?);
+            m_mainInstance.DebugPrintE("%s act == null || ttRewardVideoAd == null" , "插全屏广告");
             return;
         }
 
@@ -87,7 +87,7 @@ public class AdFullScreenVideo {
                 //获取展示广告相关信息，需要再show回调之后进行获取
                 if (manager != null && manager.getShowEcpm() != null) {
                     MediationAdEcpmInfo showEcpm = manager.getShowEcpm();
-                    String ecpm = showEcpm.getEcpm(); //展示广告的价�?
+                    String ecpm = showEcpm.getEcpm(); //展示广告的价格
                     String sdkName = showEcpm.getSdkName();  //展示广告的adn名称
                     String slotId = showEcpm.getSlotId(); //展示广告的代码位ID
                 }
@@ -113,7 +113,7 @@ public class AdFullScreenVideo {
                 //广告跳过
             }
         });
-        ad.showFullScreenVideoAd(activity); //展示插全屏广�?
+        ad.showFullScreenVideoAd(activity); //展示插全屏广告
     }
 
 }

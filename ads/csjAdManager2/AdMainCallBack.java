@@ -1,4 +1,4 @@
-package ads.csjAdManager2;
+﻿package ads.csjAdManager2;
 
 import android.support.annotation.Nullable;
 
@@ -9,10 +9,10 @@ public class AdMainCallBack {
     public AdLoadStatusCallBack adLoadStatusCallBack;
 
     public enum LoadStatusType{
-        NONE,       //未指示是什么类�?一般是onError
-        LOAD,       //加载成功或错�?
-        RENDER,     //渲染成功或错�?
-        CACHE       //缓存成功或错�?
+        NONE,       //未指示是什么类型 一般是onError
+        LOAD,       //加载成功或错误
+        RENDER,     //渲染成功或错误
+        CACHE       //缓存成功或错误
     }
 
 

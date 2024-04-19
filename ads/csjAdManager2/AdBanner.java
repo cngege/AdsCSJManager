@@ -1,4 +1,4 @@
-package ads.csjAdManager2;
+﻿package ads.csjAdManager2;
 // 横幅广告
 
 import android.app.Activity;
@@ -65,10 +65,10 @@ public class AdBanner {
                     if(m_adMainCallBack.adLoadStatusCallBack != null){
                         m_adMainCallBack.adLoadStatusCallBack.onSuccess(AdMainCallBack.LoadStatusType.LOAD, list);
                     }
-                    //showBannerView((Activity)m_mainInstance.getGameCtx(), list.get(0), m_mainInstance.getMainView()); //�?：bannerContainer为展示Banner广告的容�?
+                    //showBannerView((Activity)m_mainInstance.getGameCtx(), list.get(0), m_mainInstance.getMainView()); //注 ：bannerContainer为展示Banner广告的容器
                 }
                 else{
-                    m_mainInstance.DebugPrintI("banner广告 广告加载成功 但是列表中没有内�?);
+                    m_mainInstance.DebugPrintI("banner广告 广告加载成功 但是列表中没有内容");
                 }
             }
         });
@@ -98,7 +98,7 @@ public class AdBanner {
 //                MediationBaseManager manager = bannerAd.getMediationManager();
 //                if (manager != null && manager.getShowEcpm() != null) {
 //                    MediationAdEcpmInfo showEcpm = manager.getShowEcpm();
-//                    String ecpm = showEcpm.getEcpm(); //展示广告的价�?
+//                    String ecpm = showEcpm.getEcpm(); //展示广告的价格
 //                    String sdkName = showEcpm.getSdkName();  //展示广告的adn名称
 //                    String slotId = showEcpm.getSlotId(); //展示广告的代码位ID
 //                }
@@ -127,7 +127,7 @@ public class AdBanner {
             }
         });
 
-        // 用户点击不喜欢按钮回�?
+        // 用户点击不喜欢按钮回调
         ad.setDislikeCallback((Activity)AdMain.getInstance().getGameCtx(), new TTAdDislike.DislikeInteractionCallback() {
             @Override
             public void onShow() {

@@ -1,4 +1,4 @@
-package ads.csjAdManager2;
+﻿package ads.csjAdManager2;
 
 import android.app.Activity;
 import android.content.Context;
@@ -22,14 +22,14 @@ public class AdMain {
 
     private static AdMain instance;
     private Context m_ctx;
-    private boolean m_isInit;           // 是否初始�?
+    private boolean m_isInit;           // 是否初始化
     private boolean m_debugPrint;
     private boolean m_debugLog;
     private FrameLayout m_frameLayout;
 
     public AdMainCallBack.SDKInitCallBack callback;
 
-    // 获取&创建单例�?
+    // 获取&创建单例类
     public static AdMain getInstance(){
         if(instance == null){
             instance = new AdMain();
@@ -39,8 +39,8 @@ public class AdMain {
 
 
     /***
-     * 设置游戏主类上下�?
-     * @param ctx 主类上下�?
+     * 设置游戏主类上下文
+     * @param ctx 主类上下文
      */
     public void setGameCtx(Context ctx) {
         this.m_ctx = ctx;
@@ -55,25 +55,25 @@ public class AdMain {
     }
 
     /***
-     * 是否开�?调试前端输出
-     * @param enable 调试输出开�?
+     * 是否开启 调试前端输出
+     * @param enable 调试输出开关
      */
     public void setDebugPrintEnable(boolean enable){
         this.m_debugPrint = enable;
     }
 
     /***
-     * 是否开�?调试日志输出
-     * @param enable 调试输出开�?
+     * 是否开启 调试日志输出
+     * @param enable 调试输出开关
      */
     public void setDebugLogEnable(boolean enable){
         this.m_debugLog = enable;
     }
 
     /***
-     * 打印Debug消息�?需确保在UI线程操作
+     * 打印Debug消息， 需确保在UI线程操作
      * @param format 格式化字符串
-     * @param args   格式化参�?
+     * @param args   格式化参数
      */
     public void DebugPrintI(String format,Object... args){
         if(m_debugPrint){
@@ -113,10 +113,10 @@ public class AdMain {
 
     /***
      * 获取一个撑满全屏的布局参数
-     * @return 返回此参�?
+     * @return 返回此参数
      */
     public FrameLayout.LayoutParams getLayoutFull(){
-        FrameLayout.LayoutParams lytp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,FrameLayout.LayoutParams.MATCH_PARENT);//布局的尺�?
+        FrameLayout.LayoutParams lytp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,FrameLayout.LayoutParams.MATCH_PARENT);//布局的尺寸
         lytp.gravity = Gravity.CENTER;
         return lytp;
     }
@@ -147,7 +147,7 @@ public class AdMain {
             DebugPrintE("getSystemService display = null");
             return null;
         }
-        DebugPrintI("getscreenSize xy�?+ screenSize.x + " "+ screenSize.y);
+        DebugPrintI("getscreenSize xy："+ screenSize.x + " "+ screenSize.y);
         return screenSize;
     }
 
@@ -156,7 +156,7 @@ public class AdMain {
     }
 
     /***
-     * SDK 初始�?
+     * SDK 初始化
      */
     public void SDK_Init(String appId){
         if(m_isInit){
@@ -174,13 +174,13 @@ public class AdMain {
     }
 
     public AdMainCallBack SDK_StartLoad(){
-        // 开始加�?
+        // 开始加载
         AdMainCallBack adMainCallBack = new AdMainCallBack();
         TTAdSdk.start(new TTAdSdk.Callback() {
             @Override
             public void success() {
                 DebugPrintI("SDK_success");
-                //初始化成�?
+                //初始化成功
                 m_isInit = true;
                 //在初始化成功回调之后进行广告加载
                 if(adMainCallBack.sdkInitCallBack != null){
@@ -191,7 +191,7 @@ public class AdMain {
             @Override
             public void fail(int i, String s) {
                 DebugPrintE("SDK_fail Code:" + i + " MSG:" + s);
-                //初始化失�?
+                //初始化失败
                 m_isInit = false;
                 if(adMainCallBack.sdkInitCallBack != null){
                     adMainCallBack.sdkInitCallBack.onError(i, s);
@@ -204,8 +204,8 @@ public class AdMain {
 
 
     /***
-     * 监听安卓返回�?
-     * @return 是否(false)拦截返回键事�?
+     * 监听安卓返回键
+     * @return 是否(false)拦截返回键事件
      */
     public boolean onBackPressed(){
         boolean ret = true;

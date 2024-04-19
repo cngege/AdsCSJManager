@@ -1,5 +1,5 @@
-package ads.csjAdManager2;
-// 信息流插入广�? 插入，隐藏在文章、新闻中
+﻿package ads.csjAdManager2;
+// 信息流插入广告, 插入，隐藏在文章、新闻中
 // 参考：https://www.bilibili.com/video/BV1n441117Jn/?spm_id_from=..search-card.all.click&vd_source=4f9c5288dc87968656f37cab722ccfe6
 
 import android.app.Activity;
@@ -43,8 +43,8 @@ public class AdFeed {
                 /**
                  * 注：
                  *  1:单位为px
-                 *  2:如果是信息流自渲染广告，设置广告图片期望的图片宽�?，不能为0
-                 *  2:如果是信息流模板广告，宽度设置为希望的宽度，高度设置�?(0为高度选择自适应参数)
+                 *  2:如果是信息流自渲染广告，设置广告图片期望的图片宽高 ，不能为0
+                 *  2:如果是信息流模板广告，宽度设置为希望的宽度，高度设置为0(0为高度选择自适应参数)
                  */
                 .setImageAcceptedSize(screenSize.x, 0)
                 .setAdCount(1)
@@ -55,7 +55,7 @@ public class AdFeed {
             @Override
             public void onError(int errorCode, String errorMsg) {
                 //广告加载失败
-                m_mainInstance.DebugPrintE("[%s] 广告加载失败 %d, %s","信息流广�?,errorCode, errorMsg);
+                m_mainInstance.DebugPrintE("[%s] 广告加载失败 %d, %s","信息流广告",errorCode, errorMsg);
                 if(m_adMainCallBack.adLoadStatusCallBack != null){
                     m_adMainCallBack.adLoadStatusCallBack.onError(AdMainCallBack.LoadStatusType.NONE, null,errorCode,errorMsg);
                 }
@@ -65,7 +65,7 @@ public class AdFeed {
             public void onNativeExpressAdLoad(List<TTNativeExpressAd> list) {
                 //广告加载成功
                 //信息流广告渲染具体参考demo
-                //如果是自渲染下载类广告可以通过以下api获取下载六要�?
+                //如果是自渲染下载类广告可以通过以下api获取下载六要素
                 if (list != null && !list.isEmpty()) {
                     ad = list.get(0);
                     if(m_adMainCallBack.adLoadStatusCallBack != null){
@@ -73,7 +73,7 @@ public class AdFeed {
                     }
                 }
                 else{
-                    AdMain.getInstance().DebugPrintE("[%s] 载入成功,但列表中没有内容","信息流广�?);
+                    AdMain.getInstance().DebugPrintE("[%s] 载入成功,但列表中没有内容","信息流广告");
                 }
             }
         });
@@ -84,14 +84,14 @@ public class AdFeed {
         FrameLayout container = AdMain.getInstance().getMainView();
         //https://www.csjplatform.com/supportcenter/5402
         if (ad == null || container == null) {
-            m_mainInstance.DebugPrintE("[%s] Feed广告 showBannerView bannerAd == null || container == null","信息流广�?);
+            m_mainInstance.DebugPrintE("[%s] Feed广告 showBannerView bannerAd == null || container == null","信息流广告");
             return;
         }
-        // 设置不喜欢按钮点击事�?
+        // 设置不喜欢按钮点击事件
         ad.setDislikeCallback((Activity) m_mainInstance.getGameCtx(), new TTAdDislike.DislikeInteractionCallback() {
             @Override
             public void onShow() {
-                m_mainInstance.DebugPrintI("[%s] onShow 显示dislike弹窗","信息流广�?);
+                m_mainInstance.DebugPrintI("[%s] onShow 显示dislike弹窗","信息流广告");
             }
 
             @Override
@@ -100,18 +100,18 @@ public class AdFeed {
                 //mExpressContainer.removeAllViews();
                 ad.destroy();
                 container.removeView(ad.getExpressAdView());
-                //用户选择不喜欢原因后，移除广告展�?
+                //用户选择不喜欢原因后，移除广告展示
                 if (enforce) {
-                    m_mainInstance.DebugPrintI("[%s] 穿山甲sdk强制将view关闭�?,"信息流广�?);
+                    m_mainInstance.DebugPrintI("[%s] 穿山甲sdk强制将view关闭了","信息流广告");
                 }
             }
 
             @Override
             public void onCancel() {
-                m_mainInstance.DebugPrintI("[%s] 点击取消","信息流广�?);
+                m_mainInstance.DebugPrintI("[%s] 点击取消","信息流广告");
             }
 
-//            默认dislike样式，用户重复点击dislike按钮回调�?600版本废除
+//            默认dislike样式，用户重复点击dislike按钮回调。3600版本废除
 //            @Override
 //            public void onRefuse() {
 //
@@ -123,25 +123,25 @@ public class AdFeed {
             //广告点击回调
             @Override
             public void onAdClicked(View view, int type) {
-                m_mainInstance.DebugPrintI("[%s] 广告点击回调","信息流广�?);
+                m_mainInstance.DebugPrintI("[%s] 广告点击回调","信息流广告");
             }
 
             //广告展示回调
             @Override
             public void onAdShow(View view, int type) {
-                m_mainInstance.DebugPrintI("[%s] 广告展示回调","信息流广�?);
+                m_mainInstance.DebugPrintI("[%s] 广告展示回调","信息流广告");
             }
 
             //广告渲染失败回调
             @Override
             public void onRenderFail(View view, String msg, int code) {
-                m_mainInstance.DebugPrintE("[%s] 广告渲染失败回调 Code: %d, MSG: %s","信息流广�?, code , msg);
+                m_mainInstance.DebugPrintE("[%s] 广告渲染失败回调 Code: %d, MSG: %s","信息流广告", code , msg);
             }
 
             //广告渲染成功回调
             @Override
             public void onRenderSuccess(View view, float width, float height) {
-                m_mainInstance.DebugPrintI("[%s] 广告渲染成功回调","信息流广�?);
+                m_mainInstance.DebugPrintI("[%s] 广告渲染成功回调","信息流广告");
                 View bannerView = ad.getExpressAdView(); //获取Banner View
                 if (bannerView != null) {
                     container.addView(bannerView);

@@ -1,5 +1,5 @@
-package ads.csjAdManager2;
-// 开屏广�?
+﻿package ads.csjAdManager2;
+// 开屏广告
 
 import android.content.Context;
 import android.graphics.Point;
@@ -26,7 +26,7 @@ public class AdNative {
     private AdMainCallBack m_adMainCallBack;
 
 
-    // 获取&创建单例�?
+    // 获取&创建单例类
     public static AdNative getInstance(){
         if(instance == null){
             instance = new AdNative();
@@ -36,7 +36,7 @@ public class AdNative {
     }
 
     public AdMainCallBack LoadAd(String id){
-        //加载开屏广�?
+        //加载开屏广告
         if(m_adMainCallBack == null){
             m_adMainCallBack = new AdMainCallBack();
         }
@@ -50,7 +50,7 @@ public class AdNative {
 
             @Override
             public void onSplashLoadSuccess(CSJSplashAd csjSplashAd) {
-                m_mainInstance.DebugPrintI("[%s] 广告加载成功","开屏广�?);
+                m_mainInstance.DebugPrintI("[%s] 广告加载成功","开屏广告");
                 if(m_adMainCallBack.adLoadStatusCallBack != null){
                     m_adMainCallBack.adLoadStatusCallBack.onSuccess(AdMainCallBack.LoadStatusType.LOAD, csjSplashAd);
                 }
@@ -59,7 +59,7 @@ public class AdNative {
             @Override
             public void onSplashLoadFail(CSJAdError csjAdError) {
                 //广告加载失败
-                m_mainInstance.DebugPrintE("[%s] 广告加载失败 Code: %d Msg: %s","开屏广�?, csjAdError.getCode(),csjAdError.getMsg());
+                m_mainInstance.DebugPrintE("[%s] 广告加载失败 Code: %d Msg: %s","开屏广告", csjAdError.getCode(),csjAdError.getMsg());
                 if(m_adMainCallBack.adLoadStatusCallBack != null){
                     m_adMainCallBack.adLoadStatusCallBack.onError(AdMainCallBack.LoadStatusType.LOAD, csjAdError,0, null);
                 }
@@ -67,22 +67,22 @@ public class AdNative {
 
             @Override
             public void onSplashRenderSuccess(CSJSplashAd csjSplashAd) {
-                //广告渲染成功，在此展示广�?
-                m_mainInstance.DebugPrintI("[%s] 广告渲染成功","开屏广�?);
+                //广告渲染成功，在此展示广告
+                m_mainInstance.DebugPrintI("[%s] 广告渲染成功","开屏广告");
                 ad = csjSplashAd;
                 if(m_adMainCallBack.adLoadStatusCallBack != null){
                     m_adMainCallBack.adLoadStatusCallBack.onSuccess(AdMainCallBack.LoadStatusType.RENDER, csjSplashAd);
                 }
-                //ShowAd(csjSplashAd, m_mainInstance.getMainView()); //�?：splashContainer为展示Banner广告的容�?
+                //ShowAd(csjSplashAd, m_mainInstance.getMainView()); //注 ：splashContainer为展示Banner广告的容器
             }
 
             @Override
             public void onSplashRenderFail(CSJSplashAd csjSplashAd, CSJAdError csjAdError) {
                 if(csjAdError.getCode() == 602){
-                    m_mainInstance.DebugPrintE("[%s] Code: %d 请检查网络是否可以访�?,"开屏广�?,csjAdError.getCode());
+                    m_mainInstance.DebugPrintE("[%s] Code: %d 请检查网络是否可以访问","开屏广告",csjAdError.getCode());
                 }
                 //广告渲染失败
-                m_mainInstance.DebugPrintE("[%s] 广告渲染失败 Code: %d msg: %s","开屏广�?,csjAdError,csjAdError.getMsg());
+                m_mainInstance.DebugPrintE("[%s] 广告渲染失败 Code: %d msg: %s","开屏广告",csjAdError,csjAdError.getMsg());
 
                 if(m_adMainCallBack.adLoadStatusCallBack != null){
                     m_adMainCallBack.adLoadStatusCallBack.onError(AdMainCallBack.LoadStatusType.RENDER, csjAdError,0, null);
@@ -92,11 +92,11 @@ public class AdNative {
         return m_adMainCallBack;
     }
 
-    //显示开屏广�?
+    //显示开屏广告
     public void ShowAd() {
         FrameLayout container = AdMain.getInstance().getMainView();
         if (ad == null || container == null) {
-            m_mainInstance.DebugPrintE("[%s] (ad %s null || container %s null) ","开屏广�?, (ad == null)?"==":"!=",(container == null)?"==":"!=");
+            m_mainInstance.DebugPrintE("[%s] (ad %s null || container %s null) ","开屏广告", (ad == null)?"==":"!=",(container == null)?"==":"!=");
             return;
         }
 
@@ -105,11 +105,11 @@ public class AdNative {
             public void onSplashAdShow(CSJSplashAd csjSplashAd) {
                 //广告展示
                 //获取展示广告相关信息，需要再show回调之后进行获取
-                m_mainInstance.DebugPrintI("[%s] onSplashAdShow","开屏广�?);
+                m_mainInstance.DebugPrintI("[%s] onSplashAdShow","开屏广告");
                 MediationBaseManager manager = ad.getMediationManager();
                 if (manager != null && manager.getShowEcpm() != null) {
                     MediationAdEcpmInfo showEcpm = manager.getShowEcpm();
-                    String ecpm = showEcpm.getEcpm(); //展示广告的价�?
+                    String ecpm = showEcpm.getEcpm(); //展示广告的价格
                     String sdkName = showEcpm.getSdkName();  //展示广告的adn名称
                     String slotId = showEcpm.getSlotId(); //展示广告的代码位ID
                 }
@@ -118,13 +118,13 @@ public class AdNative {
             @Override
             public void onSplashAdClick(CSJSplashAd csjSplashAd) {
                 //广告点击
-                m_mainInstance.DebugPrintI("[%s] 广告点击","开屏广�?);
+                m_mainInstance.DebugPrintI("[%s] 广告点击","开屏广告");
             }
 
             @Override
             public void onSplashAdClose(CSJSplashAd csjSplashAd, int i) {
                 //广告关闭
-                m_mainInstance.DebugPrintI("[%s] 广告关闭","开屏广�?);
+                m_mainInstance.DebugPrintI("[%s] 广告关闭","开屏广告");
                 ad.getMediationManager().destroy();
                 container.removeView(csjSplashAd.getSplashView());
                 //finish(); // 这个是关闭当前Activity

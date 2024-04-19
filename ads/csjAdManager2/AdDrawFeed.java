@@ -1,4 +1,4 @@
-package ads.csjAdManager2;
+﻿package ads.csjAdManager2;
 
 import android.app.Activity;
 import android.graphics.Point;
@@ -49,11 +49,11 @@ public class AdDrawFeed {
                 /*
                  * 注：
                  *  1:单位为px
-                 *  2:如果是Draw自渲染广告，设置广告图片期望的图片宽�?，不能为0
-                 *  2:如果是Draw模板广告，宽度设置为希望的宽度，高度设置�?(0为高度选择自适应参数)
+                 *  2:如果是Draw自渲染广告，设置广告图片期望的图片宽高 ，不能为0
+                 *  2:如果是Draw模板广告，宽度设置为希望的宽度，高度设置为0(0为高度选择自适应参数)
                  */
                 .setImageAcceptedSize(screenSize.x, 0)
-                .setAdCount(1)//请求广告数量�?�?�?（优先采用平台配置的数量�?
+                .setAdCount(1)//请求广告数量为1到3条 （优先采用平台配置的数量）
                 .build();
 
         TTAdNative adNativeLoader = TTAdSdk.getAdManager().createAdNative(m_mainInstance.getGameCtx());
@@ -61,7 +61,7 @@ public class AdDrawFeed {
             @Override
             public void onError(int errorCode, String errorMsg) {
                 //广告加载失败
-                m_mainInstance.DebugPrintE("[%s] 广告加载失败 Code: %d Msg: %s", "Draw信息�?, errorCode, errorMsg);
+                m_mainInstance.DebugPrintE("[%s] 广告加载失败 Code: %d Msg: %s", "Draw信息流", errorCode, errorMsg);
             }
             @Override
             public void onNativeExpressAdLoad(List<TTNativeExpressAd> list) {
@@ -72,7 +72,7 @@ public class AdDrawFeed {
                     }
                 }
                 else{
-                    m_mainInstance.DebugPrintI("[%s] 广告加载成功 但是列表中没有内�?, "Draw信息�?);
+                    m_mainInstance.DebugPrintI("[%s] 广告加载成功 但是列表中没有内容", "Draw信息流");
                 }
             }
         });
@@ -92,11 +92,11 @@ public class AdDrawFeed {
         FrameLayout container = AdMain.getInstance().getMainView();
         Activity act = (Activity)AdMain.getInstance().getGameCtx();
         if (ad == null || container == null) {
-            m_mainInstance.DebugPrintE("[%s] showDrawAdView bannerAd == null || container == null", "Draw信息�?);
+            m_mainInstance.DebugPrintE("[%s] showDrawAdView bannerAd == null || container == null", "Draw信息流");
             return;
         }
 
-        // 设置不喜欢按钮点击事�?
+        // 设置不喜欢按钮点击事件
         ad.setDislikeCallback(act, getDislikeInteractionCallback());
 
         ad.setExpressInteractionListener(getExpressAdInteractionListener());
@@ -110,22 +110,22 @@ public class AdDrawFeed {
         return new TTAdDislike.DislikeInteractionCallback() {
             @Override
             public void onShow() {
-                m_mainInstance.DebugPrintI("[%s] onShow 显示dislike弹窗","信息流广�?);
+                m_mainInstance.DebugPrintI("[%s] onShow 显示dislike弹窗","信息流广告");
             }
 
             @Override
             public void onSelected(int position, String value, boolean enforce) {
                 ad.destroy();
                 AdMain.getInstance().getMainView().removeView(ad.getExpressAdView());
-                //用户选择不喜欢原因后，移除广告展�?
+                //用户选择不喜欢原因后，移除广告展示
                 if (enforce) {
-                    m_mainInstance.DebugPrintI("[%s] 穿山甲sdk强制将view关闭�?,"Draw信息流广�?);
+                    m_mainInstance.DebugPrintI("[%s] 穿山甲sdk强制将view关闭了","Draw信息流广告");
                 }
             }
 
             @Override
             public void onCancel() {
-                m_mainInstance.DebugPrintI("[%s] 点击取消","Draw信息流广�?);
+                m_mainInstance.DebugPrintI("[%s] 点击取消","Draw信息流广告");
             }
         };
     }
@@ -135,18 +135,18 @@ public class AdDrawFeed {
             @Override
             public void onAdClicked(View view, int i) {
                 //广告点击
-                m_mainInstance.DebugPrintI("[%s] 广告点击", "Draw信息�?);
+                m_mainInstance.DebugPrintI("[%s] 广告点击", "Draw信息流");
             }
 
             @Override
             public void onAdShow(View view, int i) {
                 //广告展示
-                m_mainInstance.DebugPrintI("[%s] 广告展示", "Draw信息�?);
+                m_mainInstance.DebugPrintI("[%s] 广告展示", "Draw信息流");
                 //获取展示广告相关信息，需要再show回调之后进行获取
 //                MediationBaseManager manager = bannerAd.getMediationManager();
 //                if (manager != null && manager.getShowEcpm() != null) {
 //                    MediationAdEcpmInfo showEcpm = manager.getShowEcpm();
-//                    String ecpm = showEcpm.getEcpm(); //展示广告的价�?
+//                    String ecpm = showEcpm.getEcpm(); //展示广告的价格
 //                    String sdkName = showEcpm.getSdkName();  //展示广告的adn名称
 //                    String slotId = showEcpm.getSlotId(); //展示广告的代码位ID
 //                }
@@ -157,13 +157,13 @@ public class AdDrawFeed {
             @Override
             public void onRenderFail(View view, String s, int i) {
                 //广告渲染失败
-                m_mainInstance.DebugPrintE("[%s] 广告渲染失败", "Draw信息�?);
+                m_mainInstance.DebugPrintE("[%s] 广告渲染失败", "Draw信息流");
             }
 
             @Override
             public void onRenderSuccess(View view, float w, float h) {
                 //广告渲染成功
-                m_mainInstance.DebugPrintI("[%s] 广告渲染成功", "Draw信息�?);
+                m_mainInstance.DebugPrintI("[%s] 广告渲染成功", "Draw信息流");
 
                 View bannerView = ad.getExpressAdView(); //获取Banner View
                 if (bannerView != null) {
