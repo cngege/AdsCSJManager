@@ -1,4 +1,4 @@
-﻿package ads.csjAdManager;
+package ads.csjAdManager;
 // 插全屏广告
 
 import android.app.Activity;

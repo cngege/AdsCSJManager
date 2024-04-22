@@ -1,4 +1,4 @@
-﻿package ads.csjAdManager;
+package ads.csjAdManager;
 
 
 import com.bytedance.sdk.openadsdk.TTFullScreenVideoAd;

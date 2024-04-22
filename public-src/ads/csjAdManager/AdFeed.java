@@ -1,4 +1,4 @@
-﻿package ads.csjAdManager;
+package ads.csjAdManager;
 // 信息流插入广告, 插入，隐藏在文章、新闻中
 // 参考：https://www.bilibili.com/video/BV1n441117Jn/?spm_id_from=..search-card.all.click&vd_source=4f9c5288dc87968656f37cab722ccfe6
 

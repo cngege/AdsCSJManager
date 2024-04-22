@@ -1,4 +1,4 @@
-﻿package ads.csjAdManager;
+package ads.csjAdManager;
 //激励广告 激励视频
 
 

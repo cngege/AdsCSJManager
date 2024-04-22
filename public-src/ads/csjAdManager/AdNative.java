@@ -1,4 +1,4 @@
-﻿package ads.csjAdManager;
+package ads.csjAdManager;
 // 开屏广告
 
 import android.content.Context;

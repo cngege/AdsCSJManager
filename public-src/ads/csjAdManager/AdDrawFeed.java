@@ -1,4 +1,4 @@
-﻿package ads.csjAdManager;
+package ads.csjAdManager;
 
 import android.app.Activity;
 import android.graphics.Point;

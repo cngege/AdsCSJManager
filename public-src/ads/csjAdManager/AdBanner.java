@@ -1,4 +1,4 @@
-﻿package ads.csjAdManager;
+package ads.csjAdManager;
 // 横幅广告
 
 import android.app.Activity;
