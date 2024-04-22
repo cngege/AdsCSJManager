@@ -14,7 +14,7 @@ interface AdEventParams {
 }
 
 //// 不包括开屏 开屏在java里面写
-enum ADType {
+export enum ADType {
     ADBANNER = "ADBANNER",
     ADFULLSCREEN = "ADFULLSCREEN",
     ADREWARD = "ADREWARD",
@@ -78,7 +78,7 @@ export default class ADTest {
     PreLoadAD(adId : string, num : number, adType : ADType = ADType.ADFULLSCREEN){
         if(num > 3) num = 3;
         if(num < 1) num = 1;
-        jsb.reflection.callStaticMethod("ads/csjAdManager/AdJsManager", "LoadAd", "(Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;I)V", adId, num,adType);
+        jsb.reflection.callStaticMethod("ads/csjAdManager/AdJsManager", "LoadAdIO", "(Ljava/lang/String;ILjava/lang/String;)V", adId, num,adType);
     }
 
     watchAD(event_succ: Function, event_err : Function = null, adType : ADType = ADType.ADFULLSCREEN) : number {
@@ -89,7 +89,7 @@ export default class ADTest {
             error: event_err
         });
         // TODO: 然后发送播放广告, 把id带过去
-        jsb.reflection.callStaticMethod("ads/csjAdManager/AdJsManager", "LoadAd", "(Ljava/lang/String;Ljava/lang/String;I)V", adType, _id);
+        jsb.reflection.callStaticMethod("ads/csjAdManager/AdJsManager", "ShowAdIO", "(Ljava/lang/String;I)V", adType, _id);
         return _id;
     }
 
@@ -102,6 +102,6 @@ export default class ADTest {
     }
 
     gameClose(){
-
+        jsb.reflection.callStaticMethod("java/lang/System", "exit", "(I)V", 0);
     }
 }
