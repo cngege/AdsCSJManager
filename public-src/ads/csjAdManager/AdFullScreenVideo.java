@@ -13,20 +13,25 @@ import com.bytedance.sdk.openadsdk.mediation.ad.MediationAdSlot;
 import com.bytedance.sdk.openadsdk.mediation.manager.MediationAdEcpmInfo;
 import com.bytedance.sdk.openadsdk.mediation.manager.MediationBaseManager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AdFullScreenVideo {
 // 注意 ： 同一种类型的广告同时播放（比如横幅）不要使用单例模式
 
+    private String m_id;
     private static AdFullScreenVideo instance;
     private final AdMain m_mainInstance;
     // 广告显示时相关回调接口
     private final AdFullScreenVideo.CallBack m_adCallback;
 
     // LoadAd加载完成的所有广告
-    private TTFullScreenVideoAd m_ad;
+    private ArrayList<TTFullScreenVideoAd> m_ad = new ArrayList<TTFullScreenVideoAd>();
     // 当前正在播放的广告或立刻准备下一个播放的广告
     private TTFullScreenVideoAd m_currectAd;
     private AdMainCallBack m_adMainCallBack;
 
+    private boolean canPreLoad = false;
     private int preLoadADNum = 1;
 
     // 预设的广告监听器
@@ -44,12 +49,22 @@ public class AdFullScreenVideo {
         m_adCallback = new AdFullScreenVideo.CallBack();
     }
 
+    public void EnablePreLoad(boolean enable){
+        canPreLoad = enable;
+    }
+
+    public void EnablePreLoad(boolean enable,int num){
+        canPreLoad = enable;
+        preLoadADNum = num;
+    }
+
     @Deprecated
     public void setPreLoadADNum(int num){
         preLoadADNum = num;
     }
 
     public AdMainCallBack LoadAd(String id){
+        m_id = id;
         if(m_adMainCallBack == null){
             m_adMainCallBack = new AdMainCallBack();
         }
@@ -85,7 +100,7 @@ public class AdFullScreenVideo {
             @Override
             public void onFullScreenVideoCached(TTFullScreenVideoAd ttFullScreenVideoAd) {
                 //广告缓存成功 在此回调中进行广告展示
-                m_ad = ttFullScreenVideoAd;
+                m_ad.add(ttFullScreenVideoAd);
                 if(m_adMainCallBack.adLoadStatusCallBack != null){
                     m_adMainCallBack.adLoadStatusCallBack.onSuccess(AdMainCallBack.LoadStatusType.CACHE, ttFullScreenVideoAd);
                 }
@@ -105,13 +120,15 @@ public class AdFullScreenVideo {
     //展示插全屏广告
     public void ShowAd() {
         Activity activity = (Activity)AdMain.getInstance().getGameCtx();
-        if (m_ad == null) {
-            m_mainInstance.DebugPrintE("%s act == null || ttRewardVideoAd == null" , "插全屏广告");
+        if (m_ad.isEmpty()) {
+            m_mainInstance.DebugPrintE("%s m_ad.isEmpty()" , "插全屏广告");
             if(m_adCallback.rewardSimpleCall != null) m_adCallback.rewardSimpleCall.onError(null);
             return;
         }
-        m_currectAd = m_ad;
-        m_ad = null;
+        m_currectAd = m_ad.remove(0);
+        if(canPreLoad){
+            LoadAd(m_id);
+        }
 
         m_currectAd.setFullScreenVideoAdInteractionListener(new TTFullScreenVideoAd.FullScreenVideoAdInteractionListener() {
             @Override
@@ -130,14 +147,18 @@ public class AdFullScreenVideo {
 
             @Override
             public void onAdVideoBarClick() {
-                //广告点击
+                //广告点击 点击的是广告中让你点击的指定内容
                 if(m_adCallback.adShowListenerCall != null) m_adCallback.adShowListenerCall.onVideoComplete();
+                AdMain.getInstance().DebugPrintI("调试-广告点击");
             }
 
             @Override
             public void onAdClose() {
                 //广告关闭
                 if(m_adCallback.adShowListenerCall != null) m_adCallback.adShowListenerCall.onAdClose();
+                m_currectAd.getMediationManager().destroy();
+                adOver();
+                AdMain.getInstance().DebugPrintI("调试-广告关闭");
             }
 
             @Override
@@ -145,6 +166,8 @@ public class AdFullScreenVideo {
                 //广告视频播放完成
                 if(m_adCallback.adShowListenerCall != null) m_adCallback.adShowListenerCall.onVideoComplete();
                 if(m_adCallback.rewardSimpleCall != null) m_adCallback.rewardSimpleCall.onSuccess(m_currectAd);
+                //adOver();     //广告播放完成不自动关闭
+                AdMain.getInstance().DebugPrintI("调试-广告播放完成");
             }
 
             @Override
@@ -152,10 +175,17 @@ public class AdFullScreenVideo {
                 //广告跳过
                 if(m_adCallback.adShowListenerCall != null) m_adCallback.adShowListenerCall.onSkippedVideo();
                 if(m_adCallback.rewardSimpleCall != null) m_adCallback.rewardSimpleCall.onError(m_currectAd);
+                AdMain.getInstance().DebugPrintI("调试-广告跳过");
             }
         });
 
         m_currectAd.showFullScreenVideoAd(activity); //展示插全屏广告
+    }
+
+    private void adOver(){
+        if(canPreLoad && m_ad.size()<=1){
+            LoadAd(m_id);
+        }
     }
 
     // 激励类型广告播放简单回调
