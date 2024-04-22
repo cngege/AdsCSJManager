@@ -19,7 +19,7 @@ public class AdJsManager {
     public static final String ADTYPE_ADDRAWFEED = "ADDRAWFEED";
 
     public static void InitJsManager(){
-        
+
     }
 
 
@@ -29,7 +29,7 @@ public class AdJsManager {
         }
         else if(Type.equals(ADTYPE_ADFULLSCREEN)){
             // 插全屏
-            AdFullScreenVideo.getInstance().setPreLoadADNum(preAdNum);
+            AdFullScreenVideo.getInstance().EnablePreLoad(true);
             AdFullScreenVideo.getInstance().LoadAd(adId);
         }
         else if(Type.equals(ADTYPE_ADREWARD)){
@@ -38,7 +38,7 @@ public class AdJsManager {
         else if(Type.equals(ADTYPE_ADFEED)){
             // 信息流
         }
-        else if(Type.equals(ADTYPE_ADREWARD)){
+        else if(Type.equals(ADTYPE_ADDRAWFEED)){
             // REWA信息流
         }
     }
@@ -58,7 +58,7 @@ public class AdJsManager {
         else if(Type.equals(ADTYPE_ADFEED)){
             // 信息流
         }
-        else if(Type.equals(ADTYPE_ADREWARD)){
+        else if(Type.equals(ADTYPE_ADDRAWFEED)){
             // REWA信息流
         }
     }

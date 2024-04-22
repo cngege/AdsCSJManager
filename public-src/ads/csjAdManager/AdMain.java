@@ -78,7 +78,12 @@ public class AdMain {
     public void DebugPrintI(String format,Object... args){
         if(m_debugPrint){
             if(m_ctx != null){
-                Toast.makeText(m_ctx, String.format(format,args), Toast.LENGTH_SHORT).show();
+                ((Activity)m_ctx).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(m_ctx, String.format(format,args), Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         }
         if(m_debugLog){
@@ -89,10 +94,15 @@ public class AdMain {
     public void DebugPrintE(String format,Object... args){
         if(m_debugPrint){
             if(m_ctx != null){
-                Toast toast = Toast.makeText(m_ctx, String.format(format,args), Toast.LENGTH_LONG);
-                TextView v = (TextView) toast.getView().findViewById(android.R.id.message);
-                v.setTextColor(Color.RED);
-                toast.show();
+                ((Activity)m_ctx).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast toast = Toast.makeText(m_ctx, String.format(format,args), Toast.LENGTH_LONG);
+                        TextView v = (TextView) toast.getView().findViewById(android.R.id.message);
+                        v.setTextColor(Color.RED);
+                        toast.show();
+                    }
+                });
             }
         }
         if(m_debugLog){
