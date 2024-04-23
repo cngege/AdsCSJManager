@@ -22,6 +22,7 @@ public class AdMain {
 
     private static AdMain instance;
     private Context m_ctx;
+    private Context m_statictx;
     private boolean m_isInit;           // 是否初始化
     private boolean m_debugPrint;
     private boolean m_debugLog;
@@ -50,10 +51,13 @@ public class AdMain {
         return m_ctx;
     }
 
-    public Activity getGameCtxAsActivity(){
-        return (Activity)m_ctx;
+    public void setGameStaticCtx(Context ctx){
+        m_statictx = ctx;
     }
 
+    public Context getGameStaticCtx(){
+        return m_statictx;
+    }
     /***
      * 是否开启 调试前端输出
      * @param enable 调试输出开关
@@ -127,7 +131,7 @@ public class AdMain {
      */
     public FrameLayout.LayoutParams getLayoutFull(){
         FrameLayout.LayoutParams lytp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,FrameLayout.LayoutParams.MATCH_PARENT);//布局的尺寸
-        lytp.gravity = Gravity.CENTER;
+        //lytp.gravity = Gravity.CENTER;
         return lytp;
     }
 
@@ -137,7 +141,7 @@ public class AdMain {
      */
     public Point getScreen(){
 
-        WindowManager wm = ((WindowManager)m_ctx.getSystemService(Context.WINDOW_SERVICE));
+        WindowManager wm = ((WindowManager)getGameStaticCtx().getSystemService(Context.WINDOW_SERVICE));
         Display display;
         if(wm != null) {
             display = wm.getDefaultDisplay();
