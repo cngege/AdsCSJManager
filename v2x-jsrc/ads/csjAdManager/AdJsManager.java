@@ -26,10 +26,12 @@ public class AdJsManager {
     public static void LoadAdIO(String adId,int preAdNum, String Type){
         if(Type.equals(ADTYPE_ADBANNER)){
             // 横幅
+            AdBanner.getInstance().EnablePreLoad(true,preAdNum);
+            AdBanner.getInstance().LoadAd(adId);
         }
         else if(Type.equals(ADTYPE_ADFULLSCREEN)){
             // 插全屏
-            AdFullScreenVideo.getInstance().EnablePreLoad(true);
+            AdFullScreenVideo.getInstance().EnablePreLoad(true,preAdNum);
             AdFullScreenVideo.getInstance().LoadAd(adId);
         }
         else if(Type.equals(ADTYPE_ADREWARD)){
@@ -44,9 +46,20 @@ public class AdJsManager {
     }
 
 
-    public static void ShowAdIO(String Type, int id){
+    public static void ShowAdIO(String Type, int id, String extra){
         if(Type.equals(ADTYPE_ADBANNER)){
             // 横幅
+            try{
+                JSONObject jsonObj = new JSONObject(extra);
+                if(jsonObj.has("pos")){
+                    AdBanner.getInstance().setShowPosition(jsonObj.get("pos").toString());
+                }
+                AdBanner.getInstance().ShowAd();
+
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+
         }
         else if(Type.equals(ADTYPE_ADFULLSCREEN)){
             // 插全屏
