@@ -5,6 +5,8 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/2.4/manual/en/scripting/life-cycle-callbacks.html
 
+import Msg from "./Framework/Msg";
+
 const {ccclass, property} = cc._decorator;
 
 
@@ -70,49 +72,64 @@ export default class ADTest {
     private _Event: AdEventListParams[] = [];
 
     private static registerEvent(){
-        // 注册监听
-        if (typeof window["callADLoadSuccess"] !== "function") {
-            window["callADLoadSuccess"] = function (id : number) {
-                for(let item of ADTest.getInstance()._Event){
-                    if(item.id == id){
-                        //item?.success();
-                    }
+
+
+        // 定义事件类型和监听器
+        // 广告载入成功
+        cc.game.on('callADLoadSuccess', (id : number) => {
+            for(let item of ADTest.getInstance()._Event){
+                if(item.id == id){
+                    //item?.success();
                 }
             }
-        }
-        if (typeof window["callADLoadFail"] !== "function") {
-            window["callADLoadSuccess"] = function (id : number) {
-                for(let item of ADTest.getInstance()._Event){
-                    if(item.id == id){
-                        //item?.error();
-                    }
+        });
+
+        // 广告载入错误
+        cc.game.on('callADLoadFail', (id : number) => {
+            for(let item of ADTest.getInstance()._Event){
+                if(item.id == id){
+                    //item?.error();
                 }
             }
-        }
-        if (typeof window["callADShowSuccess"] !== "function") {
-            window["callADShowSuccess"] = function (id : number) {
-                for(let item of ADTest.getInstance()._Event){
-                    if(item.id == id){
-                        let requests : AdEvent = new AdEvent();
-                        requests.isSuccess = true;
-                        item?.event(requests);
-                        ADTest.instance.removeEvent(id);
-                    }
+        });
+        // 广告显示成功
+        cc.game.on('callADShowSuccess', (id : number) => {
+            for(let item of ADTest.getInstance()._Event){
+                if(item.id == id){
+                    let requests : AdEvent = new AdEvent();
+                    requests.isSuccess = true;
+                    item.event && item.event(requests);
+                    ADTest.instance.removeEvent(id);
+                    break;
                 }
             }
-        }
-        if (typeof window["callADShowFail"] !== "function") {
-            window["callADShowFail"] = function (id : number) { 
-                for(let item of ADTest.getInstance()._Event){
-                    if(item.id == id){
-                        let requests : AdEvent = new AdEvent();
-                        requests.isSuccess = false;
-                        item?.event(requests);
-                        ADTest.instance.removeEvent(id);
-                    }
+        });
+
+        // 广告显示错误-激励广告没有达到要求
+        cc.game.on('callADShowFail', (id : number) => {
+            for(let item of ADTest.getInstance()._Event){
+                if(item.id == id){
+                    let requests : AdEvent = new AdEvent();
+                    requests.isSuccess = false;
+                    item.event && item.event(requests);
+                    ADTest.instance.removeEvent(id);
+                    break;
                 }
             }
-        }
+        });
+
+        // 点击DisLike 不感兴趣按钮关闭
+        cc.game.on('callADClickClose', (id : number) => {
+            for(let item of ADTest.getInstance()._Event){
+                if(item.id == id){
+                    let requests : AdEvent = new AdEvent();
+                    requests.isClose = true;
+                    item.event && item.event(requests);
+                    ADTest.instance.removeEvent(id);
+                    break;
+                }
+            }
+        });
     }
 
     public static getInstance(): ADTest {
@@ -130,7 +147,7 @@ export default class ADTest {
     }
 
     watchAD(event : ADEventCALL,extra : ADwatchADExtra = {}) : number{
-        let _id : number = (new Date()).getMilliseconds();
+        let _id : number = (new Date()).getMilliseconds();  // 三位数毫秒数,不能用getTime() 因为值比int大
         this._Event.push({
             id : _id,
             event: event

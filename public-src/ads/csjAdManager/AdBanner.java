@@ -24,7 +24,7 @@ public class AdBanner {
     private static AdBanner instance;
     private AdMain m_mainInstance;
     private AdMainCallBack m_adMainCallBack;
-    private ArrayList<TTNativeExpressAd> m_ad = new ArrayList<TTNativeExpressAd>();
+    private final ArrayList<TTNativeExpressAd> m_ad = new ArrayList<>();
     private TTNativeExpressAd m_currectAd;
     private String m_id;
     // 广告显示时相关回调接口
@@ -33,7 +33,7 @@ public class AdBanner {
     private boolean canPreLoad = false;
     private int preLoadADNum = 1;
     // 横幅广告显示位置 UP CENTER DOWN
-    private String pos = "DOWN";
+    private String pos = "UP";
 
     public static AdBanner getInstance(){
         if(instance == null){
